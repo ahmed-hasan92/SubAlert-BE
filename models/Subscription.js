@@ -7,8 +7,11 @@ const subscriptionSchema = new Schema({
   startDate: { type: Date, required: true },
   expiryDate: { type: Date, required: true },
   amount: { type: Number, required: true },
-  status: { type: String, enum: ['active', 'expired'], default: 'active' }, // Persisted status
-  notificationsSent: { type: Boolean, default: false },
+  status: { type: String, enum: ['active', 'expired'], default: 'active' },
+  notificationsSent: {
+    expiringSoon: { type: Boolean, default: false }, // Tracks "expiring soon" notifications
+    expired: { type: Boolean, default: false }, // Tracks "expired" notifications
+  },
 });
 
 // Middleware to update status before saving

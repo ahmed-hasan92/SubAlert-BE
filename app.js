@@ -13,6 +13,7 @@ const passport = require('passport');
 const { localStrategy, jwtStrategy } = require('./middlewares/passport');
 const userRoutes = require('./api/user/user.routes');
 const subscriptionRoutes = require('./api/subscription/subscription.routes');
+const notificationRoutes = require('./api/notification/notification.routes');
 
 const corsOptions = {
   origin: '*',
@@ -32,6 +33,7 @@ passport.use('jwt', jwtStrategy);
 
 app.use('/api', userRoutes);
 app.use('/api', subscriptionRoutes);
+app.use('/api', notificationRoutes);
 
 app.use('/media', express.static(path.join(__dirname, 'media')));
 

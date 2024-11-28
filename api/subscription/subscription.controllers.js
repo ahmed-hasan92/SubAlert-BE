@@ -1,3 +1,4 @@
+const Notification = require('../../models/Notification');
 const Subscription = require('../../models/Subscription');
 const User = require('../../models/User');
 
@@ -27,9 +28,20 @@ exports.addSubscription = async (req, res, next) => {
       user: req.user._id,
     });
 
+    const newNotification = await Notification.create({
+      user: req.user._id,
+      subscription: newSubscription._id,
+      message: `A new subscription: ${newSubscription.name} has been added`,
+    });
+
     await User.findOneAndUpdate(
       { _id: req.user._id },
-      { $push: { subscriptions: newSubscription._id } },
+      {
+        $push: {
+          subscriptions: newSubscription._id,
+          notifications: newNotification._id,
+        },
+      },
     );
 
     res.status(201).json('A new subscription has been successfully added');
