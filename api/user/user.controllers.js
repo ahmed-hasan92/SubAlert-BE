@@ -58,3 +58,16 @@ exports.login = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.getMyData = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json('User data unavailable!');
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    next(error);
+  }
+};
