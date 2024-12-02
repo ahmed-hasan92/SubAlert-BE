@@ -16,7 +16,9 @@ exports.addSubscription = async (req, res, next) => {
 
     let imagePath = null;
     if (req.file) {
-      imagePath = req.file.path;
+      imagePath = req.file.path; // For uploaded files
+    } else if (req.body.imageUrl) {
+      imagePath = req.body.imageUrl; // For predefined image URLs
     }
 
     const newSubscription = await Subscription.create({
